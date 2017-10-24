@@ -29,6 +29,7 @@ namespace OCA\Files_Sharing\External;
 
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ConnectException;
+use OC\Files\Filesystem;
 use OC\Files\Storage\DAV;
 use OCA\FederatedFileSharing\DiscoveryManager;
 use OCA\Files_Sharing\ISharedStorage;
@@ -316,4 +317,13 @@ class Storage extends DAV implements ISharedStorage {
 		return $permissions;
 	}
 
+	/**
+	 * return full path, including mount point
+	 *
+	 * @param string $path relative to mount point
+	 * @return string full path including mount point
+	 */
+	public function getFullPath($path) {
+		return Filesystem::normalizePath($this->mountPoint . '/' . $path);
+	}
 }
